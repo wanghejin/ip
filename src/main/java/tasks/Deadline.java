@@ -6,21 +6,19 @@ import java.time.format.DateTimeParseException;
 
 public class Deadline extends Task {
 
-    protected String by;
+    protected LocalDate date;
+    private static DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     public Deadline(String description, String by) {
         super(description);
-        try {
-            LocalDate date = LocalDate.parse(by);
-            this.by = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-        } catch (DateTimeParseException e) {
-            this.by = by;
-        }
+        LocalDate date = LocalDate.parse(by);
+        this.date = date;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        String byString = this.date.format(DATE_PATTERN);
+        return "[D]" + super.toString() + " (by: " + byString + ")";
     }
 }
 

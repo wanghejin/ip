@@ -6,31 +6,22 @@ import java.time.format.DateTimeParseException;
 
 public class Event extends Task {
 
-    protected String from;
-    protected String to;
+    private LocalDate from;
+    private LocalDate to;
+    private static DateTimeFormatter DATE_PATTERN = DateTimeFormatter.ofPattern("MMM dd yyyy");
 
     public Event(String description, String from, String to) {
         super(description);
-
-        try {
-            LocalDate date = LocalDate.parse(from);
-            this.from = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-        } catch (DateTimeParseException e) {
-            this.from = from;
-        }
-
-        try {
-            LocalDate date = LocalDate.parse(to);
-            this.to = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
-        } catch (DateTimeParseException e) {
-            this.to = to;
-        }
+        this.from = LocalDate.parse(from);
+        this.to = LocalDate.parse(to);
     }
 
     @Override
     public String toString() {
+        String fromString = this.from.format(DATE_PATTERN);
+        String toString = this.to.format(DATE_PATTERN);
         return "[E]" + super.toString() +
-                " (from: " + this.from +
-                " to: " + this.to + ")";
+                " (from: " + fromString +
+                " to: " + toString + ")";
     }
 }
